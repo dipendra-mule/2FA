@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // Use env variable in production
+const JWT_SECRET = process.env.JWT_SECRET_KEY; // Use env variable in production
 
 // Register with JWT sign
 export const register = async (req: Request, res: Response) => {
@@ -24,19 +24,13 @@ export const register = async (req: Request, res: Response) => {
       }
     });
 
-    // Create JWT token
-    const token = jwt.sign({ id: newUser.id, email: newUser.email, twoFactorEnabled: newUser.twoFactorEnabled }, JWT_SECRET, {
-      expiresIn: '1d'
-    });
-
     return res.status(201).json({
       message: 'User created successfully.',
       user: {
         id: newUser.id,
         email: newUser.email,
-        twoFactorEnabled: newUser.twoFactorEnabled
-      },
-      token
+        twoFactorEnabled: false
+      }
     });
   } catch (error) {
     return res.status(500).json({ message: 'Internal server error.' });
@@ -66,7 +60,12 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Create JWT token
-    const token = jwt.sign({ id: user.id, email: user.email, twoFactorEnabled: user.twoFactorEnabled }, JWT_SECRET, { expiresIn: '1d' });
+    if (!JWT_SECRET) {
+      throw new Error('JWT_SECRET is not defined');
+    }
+    const token = jwt.sign({ id: user.id, email: user.email, twoFactorEnabled: user.twoFactorEnabled }, JWT_SECRET as string, {
+      expiresIn: '1d'
+    });
 
     return res.status(200).json({
       message: 'User logged in successfully.',

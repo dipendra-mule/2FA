@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2FA Demo</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+      .form-group { margin-bottom: 15px; }
+      input { padding: 8px; width: 100%; }
+      button { padding: 8px 15px; background: #007bff; color: white; border: none; cursor: pointer; }
+      button:hover { background: #0056b3; }
+      .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+      #qr-code { max-width: 200px; }
+    </style>
+  </head>
+  <body>
+    <h1>2FA Authentication Demo</h1>
+
+    <div class="section">
+      <h2>Register</h2>
+      <div class="form-group">
+        <input type="email" id="reg-email" placeholder="Email" />
+      </div>
+      <div class="form-group">
+        <input type="password" id="reg-password" placeholder="Password" />
+      </div>
+      <button onclick="register()">Register</button>
+    </div>
+
+    <div class="section">
+      <h2>Login</h2>
+      <div class="form-group">
+        <input type="email" id="login-email" placeholder="Email" />
+      </div>
+      <div class="form-group">
+        <input type="password" id="login-password" placeholder="Password" />
+      </div>
+      <button onclick="login()">Login</button>
+    </div>
+
+    <div class="section" id="twofa-section" style="display: none;">
+      <h2>Two-Factor Authentication</h2>
+      <div id="setup-2fa">
+        <button onclick="setup2FA()">Setup 2FA</button>
+        <div id="qr-container" style="display: none;">
+          <img id="qr-code" />
+          <div class="form-group">
+            <input type="text" id="verify-token" placeholder="Enter 6-digit code" />
+          </div>
+          <button onclick="verify2FA()">Verify</button>
+        </div>
+      </div>
+      <div id="validate-2fa" style="display: none;">
+        <div class="form-group">
+          <input type="text" id="validate-token" placeholder="Enter 6-digit code" />
+        </div>
+        <button onclick="validate2FA()">Validate</button>
+      </div>
+    </div>
+
+    <script>
+      async function register() {
+        const response = await fetch('/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('reg-email').value,
+            password: document.getElementById('reg-password').value
+          })
+        });
+        alert((await response.json()).id ? 'Registration successful' : 'Registration failed');
+      }
+
+      async function login() {
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            email: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value
+          })
+        });
+
+        const result = await response.json();
+        if (result.requires2FA) {
+          document.getElementById('twofa-section').style.display = 'block';
+          document.getElementById('setup-2fa').style.display = 'none';
+          document.getElementById('validate-2fa').style.display = 'block';
+        } else {
+          document.getElementById('twofa-section').style.display = 'block';
+          document.getElementById('setup-2fa').style.display = 'block';
+          document.getElementById('validate-2fa').style.display = 'none';
+          alert('Login successful!');
+        }
+      }
+
+      async function setup2FA() {
+        const response = await fetch('/2fa/setup', {
+          method: 'POST',
+          credentials: 'include'
+        });
+
+        const result = await response.json();
+        document.getElementById('qr-code').src = result.qrCodeUrl;
+        document.getElementById('qr-container').style.display = 'block';
+      }
+
+      async function verify2FA() {
+        const response = await fetch('/2fa/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            token: document.getElementById('verify-token').value
+          })
+        });
+
+        const result = await response.json();
+        alert(result.success ? '2FA Enabled!' : 'Invalid code');
+      }
+
+      async function validate2FA() {
+        const response = await fetch('/2fa/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            token: document.getElementById('validate-token').value
+          })
+        });
+
+        const result = await response.json();
+        alert(result.success ? '2FA Verified!' : 'Invalid code');
+      }
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@ import passport from 'passport';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
+import userRoutes from './routes/twofa.routes';
 
 import './config/passport';
 
