@@ -1,4 +1,4 @@
-# 2FA-Multi Factor Auth
+# 2FA
 
 A repository for implementing Two-Factor Authentication (2FA) solutions.
 
