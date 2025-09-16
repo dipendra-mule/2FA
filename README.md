@@ -19,4 +19,3 @@ Condensation: Constant cooling of the lower vessel helps condense the vapor into
 - Extraction of parada from hingula
 
 *Example-  Extraction/ purification of parada ( mercury)
-
