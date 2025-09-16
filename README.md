@@ -20,4 +20,5 @@ Condensation: Constant cooling of the lower vessel helps condense the vapor into
 
 *Example-  Extraction/ purification of parada ( mercury)
 
-![IMG-20250916-WA0000.jpg](https://github.com/user-attachments/assets/dd78a860-feaf-4950-843c-60e68b79d895)
+![IMG-20250916-WA0000.jpg](https://github.com/user-attachments/assets/6fb4b89b-e237-4dfa-9c81-e0521d90a811)
+
