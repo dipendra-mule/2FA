@@ -1,34 +1,22 @@
-# 2FA
+*Name of Model- Tiryak patana yantra 
 
-A repository for implementing Two-Factor Authentication (2FA) solutions.
+*Apparatus- two strong mud pots, chullika( oven), small steel pipe, drugs, cotton cloth, multani mitti, water 
 
-## Overview
+*Reference - Rasa Tarangini chapter 4 
 
-This project provides tools, libraries, and documentation for integrating 2FA into your applications, enhancing security with additional authentication steps.
+*Method of preparation -
 
-## Features
+Vessels: Two strong, bigger sized mud pots are used. 
+Condensing System: The upper vessel has a bent tube attached to its neck. 
+Receiving Vessel: The lower end of the bent tube is placed into the second vessel, which contains water. 
+Joints: The joints between the vessels and the tube are sealed with clay and cloth. 
+Heating: A fire is made beneath the upper vessel. 
+Sublimation: The heat causes the substance in the upper vessel to turn into vapor, travel through the angled tube, and condense into the water in the lower vessel. 
+Condensation: Constant cooling of the lower vessel helps condense the vapor into a liquid form.
 
-- Support for Time-based One-Time Passwords (TOTP)
-- SMS and Email verification options
-- Easy integration with existing authentication systems
-- Example implementations and usage guides
+*Uses- Tiryakpatana samskara of parada
 
-## Getting Started
+- Extraction of parada from hingula
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/dipendra-mule/2FA.git
-    ```
-2. Follow the setup instructions in the documentation.
+*Example-  Extraction/ purification of parada ( mercury)
 
-## Documentation
-
-See the [docs](./docs) directory for detailed guides on setup and integration.
-
-## Contributing
-
-Contributions are welcome! Please open issues and submit pull requests for bug fixes and new features.
-
-## License
-
-This project is licensed under the MIT License.
